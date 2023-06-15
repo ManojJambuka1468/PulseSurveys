@@ -1,0 +1,8 @@
+<div class="dropdown" dropdown container="body">
+    <a dropdownToggle id="menu" aria-haspopup="true" aria-expanded="false" class="icon-click" >
+        <span class="ki ki-ellipses-solid "></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="menu" *dropdownMenu>
+        <li *ngFor="let action of actions"><a class="dropdown-item" (click)="performAction(action)">{{action}}</a></li>
+    </ul>
+</div>

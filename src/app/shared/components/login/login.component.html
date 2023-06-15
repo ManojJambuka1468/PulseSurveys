@@ -1,0 +1,12 @@
+<div class="d-flex align-items-center justify-content-center" *ngIf="!token()">
+    <div class="card w-500">
+        <div class="card-body">
+          <p class="h1 text-center">WELCOME</p>
+            <div class="d-flex pb-20">
+              <button class="btn bg-accent-violet text-white mt-20 text-center w-100"
+                (click)="login()">LOGIN</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <router-outlet *ngIf="token()"></router-outlet> -->

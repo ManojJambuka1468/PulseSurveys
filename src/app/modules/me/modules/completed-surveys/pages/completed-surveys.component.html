@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-between align-items-end">
+    <div>
+        <h2>Completed Surveys</h2>
+        <p class="text-secondary text-large">Here you can see the pulse surveys that are completed.</p>
+    </div>
+</div>
+<div class="card clear-margin-x clear-margin-b border-bottom-0">
+    <div class="card-body grid-filters clear-padding">
+        <div>
+            <div class="report-filters">
+                <div class="filters-container ng-star-inserted">
+                    <div class="filter dropdown ng-star-inserted" dropdown container="body">
+
+                        <input bsDaterangepicker #d="bsDaterangepicker" [(ngModel)]="customFilterDates"
+                            [maxDate]="today" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', adaptivePosition: true }"
+                            (ngModelChange)="updateFilter(customFilterDates[0], customFilterDates[1])"
+                            class="form-control border-0 w-200 pointer-events-none position-absolute" readonly="">
+
+                        <a class="icon-click ng-star-inserted w-250" dropdownToggle id="dropdown-menu">
+                            <span class="filter-label text-capitalize">{{filterValue}}</span>
+                            <span class="ki-arrow-dropdown"></span>
+                        </a>
+
+                        <ul class="dropdown-menu w-250" aria-labelledby="dropdown-menu" *dropdownMenu>
+                            <li>
+                                <a class="dropdown-item text-capitalize d-flex justify-content-between"
+                                    (click)="updateFilter(getDate(0,0,7),today)">
+                                    <span>Last Week</span>
+                                    <span>{{getDate(0,0,7)|date:"dd MMM"}} - {{today|date:"dd MMM"}}</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item text-capitalize d-flex justify-content-between"
+                                    (click)="updateFilter(getDate(0,1,0),today)">
+                                    <span>Last Month </span>
+                                    <span>{{getDate(0,1,0)|date:"dd MMM"}} - {{today|date:"dd MMM"}}</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item text-capitalize d-flex justify-content-between"
+                                    (click)="updateFilter(getDate(0,3,0),today)">
+                                    <span>Last 3 Months</span>
+                                    <span>{{getDate(0,3,0)|date:"dd MMM"}} - {{today|date:"dd MMM"}}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-capitalize d-flex justify-content-between"
+                                    (click)="updateFilter(getDate(0,6,0),today)"><span>Last 6 Months</span>
+                                    <span>{{getDate(0,6,0)|date:"dd MMM"}} - {{today|date:"dd MMM"}}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-capitalize d-flex justify-content-between"
+                                    (click)="updateFilter(getDate(1,0,0),today)">
+                                    <span>Last Year </span>
+                                    <span>{{getDate(1,0,0)|date:"dd MMM"}} - {{today|date:"dd MMM"}}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-capitalize d-flex justify-content-between"
+                                    (click)="d.toggle()">
+                                    <span>Custom Range</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="border-bottom flex-grow-1 ">
+                        <div class="input-search "><input type="text" placeholder="Search" name="filter"
+                                autocomplete="off" class="form-control h-100"
+                                [(ngModel)]="searchText" (ngModelChange)="onSearchTextChange()"><span class="ki-search ki ki-sm"></span>
+                        </div>
+                    </div>
+                    <div class="filter ng-star-inserted">
+                        <a class="w-100" containerclass="max-w-199" container="body" (click)="resetFilter()">
+                            <span class="ki ki-refresh"></span>
+                            <span><span class="filter-label text-capitalize">reset</span></span>
+                        </a>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card clear-margin border-0">
+    <ag-grid-angular class="ag-theme-material h-100 w-100" [gridOptions]="gridOptions" (gridReady)="gridReady($event)"
+        [paginationPageSize]="10" domLayout="autoHeight">
+    </ag-grid-angular>
+</div>

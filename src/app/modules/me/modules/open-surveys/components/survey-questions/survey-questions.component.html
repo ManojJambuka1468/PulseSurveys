@@ -1,0 +1,40 @@
+<form action="" [formGroup]="questionsForm" *ngIf="questionsForm!=undefined">
+    <div class="d-flex mb-10" *ngFor="let question of questions">
+        <div class="form-group w-75" [formGroup]="questionsForm">
+            <label for="question.id" class="h5 font-weight-semi-bold">{{question.sequence}}. {{question.text}}</label>
+            <p class="text-secondary mb-10">Response type: <span *ngIf="question.type==0">Text</span>
+                <span *ngIf="question.type==1">Rating</span><span *ngIf="question.type==2">Select From List</span> </p>
+            <div class="bg-secondary p-20 w-75">
+                <div *ngIf="question.type==0">
+                    <input id="question.id" [formControlName]="question.text" type="text"
+                        class="form-control input bg-white border-accent-violet h-60"
+                        [ngClass]="{ 'is-invalid': (questionsForm.get([question.text])!.touched) && questionsForm.get([question.text])!.errors}"
+                        [placeholder]="question.description">
+                    <span class="text-danger pt-4 pl-4"
+                        *ngIf="(questionsForm.get([question.text])!.touched) && questionsForm.get([question.text])!.errors">*Required</span>
+
+                </div>
+                <div *ngIf="question.type==2">
+                    <ng-select [items]="question.options!" bindValue="id" bindLabel="text" required
+                        class="w-50 bg-white" [placeholder]="'Select'" [formControlName]="question.text!"
+                        [ngClass]="{ 'is-invalid': (questionsForm.get([question.text])!.touched) && questionsForm.get([question.text])!.errors}">
+                    </ng-select>
+                    <span class="text-danger pt-8 pl-4"
+                        *ngIf="(questionsForm.get([question.text])!.touched) && questionsForm.get([question.text])!.errors">*Required</span>
+                </div>
+                <div *ngIf="question.type==1">
+                    <rating [max]="10" [formControlName]="question.text"
+                        [ngClass]="{ 'is-invalid': (questionsForm.get([question.text])!.touched) && questionsForm.get([question.text])!.errors}"
+                        [customTemplate]="rating" style="color: #0275d8"></rating>
+                            <ng-template #rating let-index="index" let-value="value">{{index < value ?  '&#x26AB;' : '&#x26AA;'}}</ng-template>
+                            <span class="text-danger pt-4 pl-4"
+                                *ngIf="(questionsForm.get([question.text])!.touched) && questionsForm.get([question.text])!.errors">*Required</span>
+                </div>
+                <input *ngIf="question.isCommentRequired && question.type!=0" id="question.id"
+                    [formControlName]="question.text+'comment'" type="text"
+                    class="form-control  input-sm border-0 border-radius-none  border-bottom mt-10 w-75"
+                    placeholder="Add A comment">
+            </div>
+        </div>
+    </div>
+</form>

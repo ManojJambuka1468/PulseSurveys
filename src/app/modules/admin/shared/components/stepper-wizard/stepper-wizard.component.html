@@ -1,0 +1,25 @@
+<div class="modal-header ">
+    <h5 class="modal-title">{{modaltitle}}</h5>
+    <span class="ki ki-close" (click)="modalRef.hide()"></span>
+</div>
+<div class="modal-sub-header">
+    <div class="stepper-wizard d-flex justify-content-center w-100">
+        <div class="step" *ngFor="let step of steps" [ngClass]="currentStep==step.Number?'active':''" (click)="goto(step.Number)">
+            <div class="step-number">
+                <span>{{step.Number}}</span>
+            </div>
+            <label class="step-label w-150">
+                <span>{{step.Title}}</span>
+            </label>
+        </div>
+    </div>
+    <div class="d-flex">
+        <button  *ngIf="currentStep==1"class="btn btn-primary" (click)="gotoNext()">Save & Continue</button>
+        <button *ngIf="currentStep==steps.length" class="btn btn-primary mx-10 " (click)="goBack()" disabled>Back</button>
+        <button *ngIf="currentStep==steps.length" class="btn btn-primary" (click)="launchSurvey()">{{modalButton}}</button>
+    </div>
+</div>
+<div class="modal-body" *ngIf="templateId=='-1' || templateId==undefined  || (templateId!=undefined && survey!=undefined)">
+    <app-create-survey-details [survey]="survey" *ngIf="currentStep==1" [action]="modalButton"></app-create-survey-details>
+    <app-create-survey-questions [survey]="survey" *ngIf="currentStep==2"></app-create-survey-questions>
+</div>

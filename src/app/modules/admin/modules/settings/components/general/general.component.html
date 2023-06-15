@@ -1,0 +1,19 @@
+<div class="d-flex justify-content-between align-items-end">
+    <div>
+        <h2>Survey Templates</h2>
+        <p class="text-muted">Here you can configure survey templates that you can directly use while creating surveys.</p>
+    </div>
+    <div>
+        <button class="btn bg-accent-violet text-white" (click)="openCreateSurveyStepper()">Create New Survey Template</button>
+    </div>
+</div>
+
+<div class="card border-0">
+    <ag-grid-angular class="ag-theme-material h-100 w-100"
+        [gridOptions]="gridOptions"
+        (gridReady)="gridReady()"
+        [paginationPageSize]="10"
+        domLayout="autoHeight"
+    >
+    </ag-grid-angular>
+</div>

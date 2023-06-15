@@ -1,0 +1,66 @@
+<div class="modal-header">
+    <h5 class="modal-title">Question Details</h5>
+    <span class="ki ki-close" (click)="modalRef.hide()"></span>
+</div>
+<div class="modal-body">
+    <div class="form-group d-flex">
+        <ng-select [items]="questions" bindValue="sequence" bindLabel="sequence" placeholder="Select"
+            [(ngModel)]="currentSequenceNumber" (change)="onSelect()" class="w-150">
+        </ng-select>
+        <div class="pt-8">
+            <span class="ki bg-secondary ki-chevron-left mx-10" (click)="viewPreviousQuestion()"></span>
+            <span class="ki bg-secondary ki-chevron-right mx-10" (click)="viewNextQuestion()"></span>
+        </div>
+    </div>
+
+    <div class="">
+        <h3>{{question.sequence}}. {{question.text}}</h3>
+        <p class="text-secondary mb-20">Response type: <span *ngIf="question.type==0">Text</span> <span
+                *ngIf="question.type==1">Rating</span> <span *ngIf="question.type==2">Select From List</span> </p>
+    </div>
+
+    <div class="btn-group btn-group-secondary">
+        <button class="btn border-1 btn-sm" [ngClass]="toggleView==1?'bg-accent-violet text-white ':'bg-secondary'"
+            (click)="toggleView=1">Analytical</button>
+        <button class="btn border-1 btn-sm" [ngClass]="toggleView==2?'bg-accent-violet text-white':'bg-secondary'"
+            (click)="toggleView=2">Detailed</button>
+    </div>
+
+    <div class="" *ngIf="toggleView==1">
+        <div class="card  clear-margin-x bg-secondary" *ngIf="question.type==0">
+            <div class="card-body text-center">
+                <p>Analytical View is Unavailable for Text Responses</p>
+            </div>
+        </div>
+        <div class="mt-20 p-12 bg-secondary" *ngIf="question.type==1">
+            <p>Average Rating</p>
+            <div class="d-flex align-items-center">
+                <progressbar class="progress progress-accent-violet w-50" [value]="question.averageRating*10">
+                </progressbar>
+                <p class="text-large ml-10">{{question.averageRating}} / 10</p>
+            </div>
+        </div>
+        <div class="mt-20 p-12 bg-secondary " *ngIf="question.type==2">
+            <div *ngFor="let item of question.optionPercentage" class="mb-20">
+                <p>{{item.text}}</p>
+                <div class=" d-flex align-items-center">
+                    <progressbar class="progress progress-accent-violet w-50" [value]="+item.percentage">
+                    </progressbar>
+                    <p class="text-large ml-10">{{item.percentage}}%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" *ngIf="toggleView==2">
+        <form novalidate="" role="search" class="form-inline my-10 d-flex justify-content-end">
+            <div class="input-search w-25">
+                <span class="ki-search ki ki-sm"></span>
+                <input placeholder="Search" [(ngModel)]="searchText" name="searchText" (ngModelChange)="onSearchTextChange()" class="form-control border-0 border-bottom">
+            </div>
+        </form>
+        <ag-grid-angular class="ag-theme-material h-100 w-100" [gridOptions]="gridOptions"
+            (gridReady)="gridReady($event)" [paginationPageSize]="10" domLayout="autoHeight">
+        </ag-grid-angular>
+    </div>
+</div>

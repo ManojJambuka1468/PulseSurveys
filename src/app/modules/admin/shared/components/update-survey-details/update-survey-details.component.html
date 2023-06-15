@@ -1,0 +1,36 @@
+<div class="modal-header ">
+    <h5 class="modal-title">{{modaltitle}}</h5>
+    <span class="ki ki-close" (click)="this.modalRef.hide()"></span>
+</div>
+
+<div class="modal-body">
+    <p class="my-10 text-hint">Note: You can't update the questions here.</p>
+    <form action="" [formGroup]="updateSurveyForm" *ngIf="updateSurveyForm!==undefined">
+        <div class="form-group">
+            <label class="text-secondary">Title of this survey</label>
+            <input type="text" formControlName="title" class="form-control input-sm"
+             [ngClass]="{ 'is-invalid': updateSurveyForm.get('title')!.touched && updateSurveyForm.get('title')!.errors}">
+             <span class="text-danger" *ngIf="updateSurveyForm.get('title')!.touched && updateSurveyForm.get('title')!.errors">*Required</span>
+        </div>  
+        
+        <div class="form-group">
+            <label class="text-secondary">Description</label>
+            <input type="text" formControlName="description" class="form-control input"
+            [ngClass]="{ 'is-invalid': updateSurveyForm.get('description')!.touched && updateSurveyForm.get('description')!.errors }">
+            <span class="text-danger" *ngIf="updateSurveyForm.get('description')!.touched && updateSurveyForm.get('description')!.errors">*Required</span>
+        </div>
+        <div class="form-group ">
+            <label for="DateAssigned ">The survey expires on</label>
+            <div class="input-calendar col-sm-4 clear-padding-x">
+                <input type="date" formControlName="expiresOn" class="form-control" id="DateAssigned"
+                [ngClass]="{ 'is-invalid': updateSurveyForm.get('expiresOn')!.touched && updateSurveyForm.get('expiresOn')!.errors }">
+            </div>
+            <span class="text-danger" *ngIf="updateSurveyForm.get('expiresOn')!.touched && updateSurveyForm.get('expiresOn')!.errors">*Required</span>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer p-20">
+     <button class="btn btn-secondary border-color-accent-violet" (click)="this.modalRef.hide()">Cancel</button>
+    <button class="btn btn-primary bg-accent-violet" (click)="updateSurvey()">{{modalButton}}</button>
+</div>

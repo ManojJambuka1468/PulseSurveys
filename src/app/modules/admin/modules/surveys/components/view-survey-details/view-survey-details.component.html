@@ -1,0 +1,83 @@
+<div class="" *ngIf="survey!==undefined">
+    <div class="d-flex align-items-center text-link mb-20">
+        <a class="d-flex align-items-center" [routerLink]="['../..']">
+            <span class="ki ki-arrow-backward ki-md mr-4 text-accent-violet"></span>
+            <span class="text-large text-accent-violet">Back to List</span></a>
+    </div>
+    <div class="card clear-margin-x">
+        <div class="card-body clear-margin-x">
+            <div class="data-block mb-20">
+                <h4 class="text-capitalize">{{survey.title}}</h4>
+            </div>
+
+            <div class="data-bar single-line-bar d-flex w-75 justify-content-between ">
+                <div class="data-block">
+                    <label class="data-label">status</label>
+                    <div class="d-flex align-items-center">
+                        <div *ngIf="survey.status==0" class="dot bg-red"></div>
+                        <div *ngIf="survey.status==1" class="dot bg-green"></div>
+                        <p class="ml-10 text-large">Closed</p>
+                    </div>
+                </div>
+
+                <div class="data-block">
+                    <label class="data-label">expired on</label>
+                    <p class=" text-large">{{survey.expiresOn|date:"MMM dd, yyyy"}}</p>
+                </div>
+
+                <div class="data-block">
+                    <label class="data-label">launched on</label>
+                    <p class=" text-large">{{survey.expiresOn|date:"MMM dd, yyyy"}}</p>
+                </div>
+
+                <div class="data-block">
+                    <label class="data-label">launched by</label>
+                    <p class=" text-large">{{survey.launchedBy}}</p>
+                </div>
+
+                <div class="data-block">
+                    <label class="data-label">completion</label>
+                    <p class=" text-large">{{survey.completionPercentage}} %</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="questions!=undefined">
+        <div *ngFor="let question of questions">
+            <div class="card w-75 clear-margin-x">
+                <div class="card-body">
+                    <p class="text-large">
+                        <span>{{question.sequence}}.</span>
+                        {{question.text}} ?
+                    </p>
+                    <p class="text-secondary mb-20">Response type: <span *ngIf="question.type==0">Text</span> <span
+                            *ngIf="question.type==1">Rating</span> <span *ngIf="question.type==2">Select From
+                            List</span> </p>
+
+                    <div class="data-block" *ngIf="question.type==1">
+                        <p>Average Rating</p>
+                        <div class="d-flex align-items-center">
+                            <progressbar class="progress progress-accent-violet w-50" [value]="question.averageRating*10">
+                            </progressbar>
+                            <p class="text-large ml-10">{{question.averageRating/10| percent: '1.'}}</p>
+                        </div>
+                    </div>
+
+                    <div class="data-block" *ngIf="question.type==2">
+                        <div *ngFor="let item of question.optionPercentage" class="mb-20">
+                            <p>{{item.text}}</p>
+                            <div class=" d-flex align-items-center">
+                                <progressbar class="progress progress-accent-violet w-50" [value]="+item.percentage">
+                                </progressbar>
+                                <p class="text-large ml-10">{{item.percentage/100| percent: '1.'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a class=" text-accent-violet" (click)="seeMoreDetails(question)">See more details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,20 @@
+<div *ngIf="survey!=undefined">
+    <h2 class="mb-10">{{survey.title}}</h2>
+    <p class="text-normal w-700">{{survey.description}}</p>
+    <h6 class="mt-20 mb-10">Other Details</h6>
+    <div class="data-bar single-line-bar">
+        <div class="data-block">
+            <label class="data-label">Expires on</label>
+            <p>{{survey.expiresOn|date:"MMM dd,yyyy"}}</p>
+        </div>
+        <div class="data-block">
+            <label class="data-label">Questions</label>
+            <p>{{survey.questionsCount}}</p>
+        </div>
+        <div class="data-block">
+            <label class="data-label">survey type</label>
+            <p *ngIf="survey.type==1">Public</p>
+            <p *ngIf="survey.type==0">Anonymous</p> 
+        </div>
+    </div>
+</div>

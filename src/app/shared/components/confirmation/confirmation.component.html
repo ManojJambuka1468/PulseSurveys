@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h5 class="modal-title">Confirmation</h5>
+    <span class="ki ki-close" (click)="modalRef.hide()"></span>
+</div>
+<div class="modal-body">
+    <p *ngIf="action=='delete'">Are You Sure, You want to Delete this Template ?</p>
+    <p *ngIf="action=='close'">Are You Sure You want to close this survey before it Expires ? </p>
+    <p *ngIf="action=='Submit Survey'">Are you sure, you want to Submit ? </p>
+</div>
+<div class="modal-footer p-20">
+    <button class="btn btn-secondary" (click)="modalRef.hide()">No</button>
+    <button class="btn btn-primary" (click)="closeSurvey()">Yes</button>
+</div>

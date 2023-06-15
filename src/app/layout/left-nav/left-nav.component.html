@@ -1,0 +1,12 @@
+<nav role="navigation" class="nav left-nav left-nav-sticky w-100px">
+    <div class="left-nav-body">
+        <ul class="navbar-nav">
+            <li *ngFor="let item of navlist" class="nav-item" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="[item.slug]">
+                    <span class="{{item.icon}} sidebar-list-icon icon-lg"></span>
+                    <span class="sidebar-list-label">{{item.title}}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

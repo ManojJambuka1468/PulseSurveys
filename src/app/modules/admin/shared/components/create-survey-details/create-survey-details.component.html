@@ -1,0 +1,24 @@
+<form action="" *ngIf="newSurveyDetails" [formGroup]="newSurveyDetails" class="w-500">
+    <div class="form-group">
+        <label class="text-secondary">Title of this survey</label>
+        <input type="text"  formControlName="title" class="form-control input-sm"
+        [ngClass]="{'is-invalid':newSurveyDetails.get('title')!.touched && newSurveyDetails.get('title')!.errors}"
+        >
+        <span class=" mt-20 text-danger" *ngIf="newSurveyDetails.get('title')!.touched && newSurveyDetails.get('title')!.errors">*Required</span>
+    </div>
+    
+    <div class="form-group">
+        <label class="text-secondary">Description</label>
+        <input type="text" formControlName="description" class="form-control input"
+        [ngClass]="{ 'is-invalid': newSurveyDetails.get('description')!.touched && newSurveyDetails.get('description')!.errors}"
+        >
+        <span class=" mt-20 text-danger" *ngIf="newSurveyDetails.get('description')!.touched && newSurveyDetails.get('description')!.errors">*Required</span>
+    </div>
+    <div class="form-group" *ngIf="action!='Save & Close' && action!= 'Create Template'">
+        <label for="DateAssigned ">The survey expires on</label>
+        <div class="input-calendar col-sm-4 clear-padding-x">
+            <input  type="date" class="form-control" id="DateAssigned" formControlName="expiresOn">
+            <span class=" mt-20 text-danger" *ngIf="newSurveyDetails.get('expiresOn')!.touched && newSurveyDetails.get('expiresOn')!.errors">*Required</span>
+        </div>
+    </div>
+</form>

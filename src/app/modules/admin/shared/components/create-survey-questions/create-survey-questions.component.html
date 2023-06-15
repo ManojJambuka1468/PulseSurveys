@@ -1,0 +1,95 @@
+<form action="" [formGroup]="questionsForm" class="w-75">
+    <span class="text-danger" *ngIf="questionsForm.value.questions.length==0 && isSubmitted">*Minimum 1 Question is
+        Mandatory for Launching a Survey</span>
+    <accordion formArrayName="questions">
+        <div class="d-flex mb-10" *ngFor="let question of questions().controls; let questionId=index">
+            <accordion-group [isOpen]="true" class="flex-fill">
+                <div accordion-heading>
+                    <div class="d-flex align-items-center flex-fill mb-10 mt-10">
+                        <p class="text-large font-weight-bold text-truncate-1">
+                            {{question.value.text}}</p>
+                    </div>
+                    <span class="ki-arrow-up ki ml-8"></span>
+                    <span class="ki-arrow-down ki ml-8"></span>
+                </div>
+
+                <div [formGroupName]="questionId" class="collapse show mt-10 mb-10" data-parent="#accordion">
+                    <div class="form-group">
+                        <input type="text" class="form-control input" formControlName="text"
+                            placeholder="Type the Question Here"
+                            [ngClass]="{'is-invalid':question.get('text')!.touched && question.get('text')!.errors}">
+                        <span *ngIf="question.get('text')!.touched && question.get('text')!.errors"
+                            class="text-danger mt-10">* Required</span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control input" *ngIf="question.get('AddDescription')!.value || question.get('description')"
+                            formControlName="description" placeholder="Provide a Description">
+                        <label class="text-secondary cursor-pointer text-accent-violet"
+                            (click)="question.get('AddDescription')!.setValue(true)"
+                            *ngIf="!question.get('AddDescription')!.value">+Add Additional
+                            Description</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="DateAssigned" class="text-large font-weight-bold">How do you want the employees to
+                            respond to this question ?</label>
+                        <div class="d-flex justify-content-between w-500">
+
+                            <input type="radio" id="rating{{questionId}}"
+                                (change)="addSelectOptions(question.value.type,questionId)" value="1"
+                                formControlName="type" />
+                            <label for="rating{{questionId}}">Rating</label>
+
+                            <input type="radio" id="comment{{questionId}}"
+                                (change)="addSelectOptions(question.value.type,questionId)" value="0"
+                                formControlName="type" />
+                            <label for="comment{{questionId}}">Comment Only</label>
+                            <input type="radio" id="select{{questionId}}"
+                                (change)="addSelectOptions(question.value.type,questionId)" value="2"
+                                formControlName="type" />
+                            <label for="select{{questionId}}">Select From List</label>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between  align-items-center w-500"
+                        *ngIf="question.value.type==1">
+                        <div class="form-group">
+                            <label>'0'- Label</label>
+                            <input type="text" class="form-control input-sm" placeholder="e.g It was bad">
+                        </div>
+                        <div class="w-110 border-radius-20 p-4 h-3 bg-accent-green-gradient"></div>
+                        <div class="form-group">
+                            <label>'10'- Label</label>
+                            <input type="text" class="form-control input-sm" placeholder="e.g It was great">
+                        </div>
+                    </div>
+
+                    <div class="mb-10" formArrayName="options" *ngIf="question.value.type==2">
+                        <div *ngFor="let option of selectOptions(questionId).controls; let optionId=index">
+                            <div [formGroupName]="optionId" class="d-flex mt-10">
+                                <input type="text" formControlName="text" class="form-control input-sm w-250"
+                                    [ngClass]="{'is-invalid':option.get('text')!.touched && option.get('text')!.errors}" />
+                                <span class="ki ki-close ml-10 pt-8 cursor-pointer"
+                                    (click)="removeSelectOption(questionId,optionId)"></span>
+                            </div>
+                            <span *ngIf="option.get('text')!.touched && option.get('text')!.errors"
+                                class="text-danger">* Required</span>
+                            <p class="text-danger" *ngIf="optionId>=4">Max Options :5</p>
+                        </div>
+                        <span *ngIf="question.value.options.length<=1" class="text-danger">* Minimum 2 Options are
+                            Required</span>
+                        <p class="text-small text-accent-violet mt-10 cursor-pointer"
+                            (click)="addSelectOption(questionId)">+Add more Options</p>
+                    </div>
+
+                    <div class="form-group clear-margin" *ngIf="question.value.type!=0">
+                        <input type="checkbox" id="optionalComment{{questionId}}" formControlName="isCommentRequired">
+                        <label for="optionalComment{{questionId}}">Take a Comment Along with the Rating</label>
+                    </div>
+                </div>
+            </accordion-group>
+            <span class="ki ki-delete ml-10 mt-10 cursor-pointer" (click)="removeQuestion(questionId)"></span>
+        </div>
+    </accordion>
+</form>
+<button type="button" (click)="addQuestion()" class="btn btn-link mt-20">Add Question</button>

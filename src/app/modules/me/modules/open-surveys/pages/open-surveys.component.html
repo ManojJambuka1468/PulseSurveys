@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-between align-items-end">
+    <div>
+        <h2>Open Pulse Surveys</h2>
+        <p class="text-secondary text-large">Here you can see the active pulse surveys that are yet to submit.</p>
+    </div>
+</div>
+
+<div class="card clear-margin-x border-0">
+    <ag-grid-angular class="ag-theme-material h-100 w-100"
+        [gridOptions]="gridOptions"
+        (gridReady)="gridReady()"
+        [paginationPageSize]="10"
+        domLayout="autoHeight"
+    >
+    </ag-grid-angular>
+</div>

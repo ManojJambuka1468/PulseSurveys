@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h5 class="modal-title">Launch a new Survey</h5>
+    <span class="ki ki-close" (click)="modalRef.hide()"></span>
+</div>
+<div class="modal-body" *ngIf="templates!=undefined">
+    <div class="form-group">
+        <label>Select an Option</label>
+         <ng-select  [items]="templates"
+             bindLabel="title"
+             bindValue="id"
+             placeholder="Select"
+             [(ngModel)]="selectedTemplate"
+        >
+    </ng-select>
+    <p *ngIf="(isSubmitted && !selectedTemplate)" class="pt-4 text-danger">*Required</p>
+    </div>
+</div>
+<div class="modal-footer p-20">
+    <button class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
+    <button class="btn btn-primary" (click)="launch()" >Launch</button>
+</div>
